@@ -1,0 +1,100 @@
+.validation-item-flex {
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex; }
+
+.validation-item-container {
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  border: 1px solid #ddd;
+  margin-top: -1px;
+  border-radius: 0;
+  padding: 0; }
+
+.validation-item-container > .item-container {
+  -webkit-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 0;
+  border: 0; }
+
+.validation-item-container > .icon-container {
+  -webkit-flex: 0 0 auto;
+  flex: 0 0 auto;
+  display: -webkit-flex;
+  display: flex;
+  font-size: 16px; }
+
+/* All items within the validation item should not have lr borders */
+.validation-item-container .item {
+  border-left: 0;
+  border-right: 0;
+  border-radius: 0 !important;
+  /* what the? */
+  -webkit-justify-content: space-between;
+  justify-content: space-between; }
+
+/* Styles the validation item with a red border if an error is detected */
+.inner-border, .validation-item-container.has-error, .list-inset .validation-item-container.has-error {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; }
+
+.validation-item-container.has-error {
+  border-left: 3px solid #ef473a; }
+
+.list-inset .validation-item-container.has-error {
+  border-left: 2px solid #ef473a; }
+
+.validation-item-container .error-message {
+  border-top: 0;
+  color: #ef473a;
+  font-size: 14px;
+  white-space: normal;
+  padding-right: 0;
+  padding-top: 0;
+  padding-bottom: 4px; }
+
+.validation-item-container .error-icon {
+  margin-left: 7px;
+  margin-right: 16px;
+  z-index: 1;
+  -webkit-align-self: center;
+  align-self: center; }
+
+/* 
+
+These styles are used if multiple inputs are within a validation item 
+They bunch the items closer together and remove borders between them 
+
+I cannot think of another reason to have multiple inputs within a single validation item
+unless it is to have a directive using ngModelController that requires multiple inputs
+   
+*/
+.validation-item-container .item.item-input:not(:first-child) {
+  border-top: 0;
+  padding-top: 0; }
+
+.validation-item-container .item.item-input:not(:last-child) {
+  border-bottom: 0;
+  padding-bottom: 0; }
+
+.validation-item-container .item.item-input.item-select:first-of-type > select {
+  margin-top: 7px; }
+
+.validation-item-container .item.item-input.item-select:last-of-type > select {
+  margin-bottom: 5px; }
+
+/*.validation-item-container .item.item-input.item-select:first-of-type:not(:last-of-type) > select {
+    margin-top:0;
+}*/
+.validation-item-container .item.item-input.item-select:last-of-type:not(:first-of-type) > select {
+  margin-bottom: 0; }
+
+.validation-item-container .item.item-input.item-select:first-of-type:not(:last-of-type):after {
+  margin-top: 0px; }
+
+.validation-item-container .item.item-input.item-select:last-of-type:not(:first-of-type):after {
+  margin-top: -2px; }

@@ -1,0 +1,18 @@
+<ng-form>
+    <div class="validation-item-container item" ng-class="{ 'has-error': formInvalid && (formTouched || formSubmitted) }">
+        <div class="item-container">
+            <ng-transclude></ng-transclude>
+            
+            <div class="item error-message" role="alert" ng-messages="formCtrl.$error" ng-show="formCtrl.$invalid && (formTouched || formSubmitted) && showErrorMessage">
+                <div ng-message-exp="key" ng-repeat="(key, value) in errors">
+                    {{ value }}
+                </div>
+            </div>
+        </div>
+        
+        <div class="icon-container">
+            <i class="icon ion-alert-circled assertive error-icon" ng-show="formInvalid && (formTouched || formSubmitted)" on-touch="showErrorMessage = !showErrorMessage"></i>
+        </div>
+    </div>
+</ng-form>
+
