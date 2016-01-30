@@ -14,8 +14,6 @@ var htmlTemplates = htmlTemplates || {};htmlTemplates['ionic-validation-directiv
     '            <i class="icon ion-alert-circled assertive error-icon" ng-show="formInvalid && (formTouched || formSubmitted)" on-touch="showErrorMessage = !showErrorMessage"></i>\n' +
     '        </div>\n' +
     '    </div>\n' +
-    '    \n' +
-    '    {{ formCtrl.$error }}\n' +
     '</ng-form>\n' +
     '\n' +
     '';
