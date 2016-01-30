@@ -3,7 +3,7 @@ var htmlTemplates = htmlTemplates || {};htmlTemplates['ionic-validation-directiv
     '        <div class="item-container">\n' +
     '            <ng-transclude></ng-transclude>\n' +
     '            \n' +
-    '            <div class="item error-message" role="alert" ng-messages="formCtrl.$error" ng-show="formCtrl.$invalid && (formTouched || formSubmitted) && showErrorMessage">\n' +
+    '            <div class="item error-message" ng-messages="formCtrl.$error" role="alert"  ng-show="formInvalid && (formTouched || formSubmitted) && showErrorMessage">\n' +
     '                <div ng-message-exp="key" ng-repeat="(key, value) in errors">\n' +
     '                    {{ value }}\n' +
     '                </div>\n' +
@@ -14,6 +14,8 @@ var htmlTemplates = htmlTemplates || {};htmlTemplates['ionic-validation-directiv
     '            <i class="icon ion-alert-circled assertive error-icon" ng-show="formInvalid && (formTouched || formSubmitted)" on-touch="showErrorMessage = !showErrorMessage"></i>\n' +
     '        </div>\n' +
     '    </div>\n' +
+    '    \n' +
+    '    {{ formCtrl.$error }}\n' +
     '</ng-form>\n' +
     '\n' +
     '';

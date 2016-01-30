@@ -1,0 +1,25 @@
+{
+  "name": "ionic-validation-directive",
+  "version": "1.0.0",
+  "description": "A directive for ionic that wraps form inputs and displays their errors",
+  "main": [
+    "dist/js/ionic-validation-directive.js"
+  ],
+  "authors": [
+    "Zachary Keeton <zkeeton5@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "validation",
+    "directive",
+    "ionic"
+  ],
+  "homepage": "https://github.com/RemnantArcher/ionic-validation-directive",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
