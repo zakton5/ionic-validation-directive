@@ -1,22 +1,22 @@
 var htmlTemplates = htmlTemplates || {};htmlTemplates['ionic-validation-directive-template.html'] = '<ng-form>\n' +
-    '    <div class="validation-item-container item" ng-class="{ \'has-error\': formInvalid && (formTouched || formSubmitted) }">\n' +
-    '        <div class="item-container">\n' +
-    '            <ng-transclude></ng-transclude>\n' +
-    '            \n' +
-    '            <div class="item error-message" ng-messages="formCtrl.$error" role="alert"  ng-show="formInvalid && (formTouched || formSubmitted) && showErrorMessage">\n' +
+    '    <div class="validation-item-container" ng-class="{ \'has-error\': formInvalid && (formTouched || formSubmitted), \'message-open\': showErrorMessage, \'ionic-style\': ionicStyle }">\n' +
+    '        <div class="validation-item-flex">\n' +
+    '            <div class="item-container">\n' +
+    '                <ng-transclude></ng-transclude>\n' +
+    '            </div>\n' +
+    '            <div class="icon-container">\n' +
+    '                <i class="icon ion-alert-circled assertive error-icon" ng-show="formInvalid && (formTouched || formSubmitted)" on-touch="showErrorMessage = !showErrorMessage"></i>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '        <div class="error-message-container">\n' +
+    '            <div class="error-message" ng-messages="formCtrl.$error" role="alert" ng-show="formInvalid && (formTouched || formSubmitted) && showErrorMessage">\n' +
     '                <div ng-message-exp="key" ng-repeat="(key, value) in errors">\n' +
     '                    {{ value }}\n' +
     '                </div>\n' +
     '            </div>\n' +
     '        </div>\n' +
-    '        \n' +
-    '        <div class="icon-container">\n' +
-    '            <i class="icon ion-alert-circled assertive error-icon" ng-show="formInvalid && (formTouched || formSubmitted)" on-touch="showErrorMessage = !showErrorMessage"></i>\n' +
-    '        </div>\n' +
     '    </div>\n' +
-    '</ng-form>\n' +
-    '\n' +
-    '';
+    '</ng-form>';
 
 
 (function () {
@@ -40,6 +40,11 @@ var htmlTemplates = htmlTemplates || {};htmlTemplates['ionic-validation-directiv
                     scope.formTouched = false;
                     scope.formSubmitted = false;
                     scope.showErrorMessage = false;
+                    
+                    // Determine whether the input style is ionic or not by searching for any
+                    // children with the item class.
+                    var itemNodes = element.children()[0].querySelectorAll('.item');
+                    scope.ionicStyle = itemNodes.length > 0;
                 
                     // Catch the broadcast from the page's controller indicating that the parent (master) form has been submitted
                     scope.$on('formSubmitted', function (e, submitted) {
@@ -67,8 +72,8 @@ var htmlTemplates = htmlTemplates || {};htmlTemplates['ionic-validation-directiv
                     // of whether they have been touched or not. Doing this allows showing the error message
                     // to the user only when he/she has shifted focus to another field elsewhere.
                     angular.forEach(formCtrl, function (value, key) {
-                        if (typeof value === 'object' && value.hasOwnProperty('$modelValue')) {     
-                            scope.$watch(function() { return value.$touched; }, function(newVal, oldVal) {
+                        if (typeof value === 'object' && value.hasOwnProperty('$modelValue')) {
+                            scope.$watch(function () { return value.$touched; }, function (newVal, oldVal) {
                                 if (newVal)
                                     scope.formTouched = true;
                             });

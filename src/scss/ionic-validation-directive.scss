@@ -5,79 +5,82 @@
     display: flex;
 }
 
-.validation-item-container {
-    // Enable flex box for the container
-    display: -moz-flex;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    
-    // Standard gray border
-    border: 1px solid #ddd;
-    margin-top: -1px;
-    border-radius:0;
-    padding:0;
-}
-
-.validation-item-container > .item-container {
-    -webkit-flex: 1 1 auto;
-    flex: 1 1 auto; 
-    padding:0;
-    border:0;
-}
-
-.validation-item-container > .icon-container {
-    -webkit-flex: 0 0 auto;
-    flex: 0 0 auto; 
-    display: -webkit-flex;
-    display:flex;
-    font-size: 16px;
-}
-
-/* All items within the validation item should not have lr borders */
-.validation-item-container .item {
-    border-left:0;
-    border-right:0;
-    border-radius:0 !important; /* what the? */
-    
-    -webkit-justify-content: space-between;
-    justify-content: space-between;
-}
-
-/* Styles the validation item with a red border if an error is detected */
-
-.inner-border {
+.border-box-style {
     -moz-box-sizing:    border-box;
     -webkit-box-sizing: border-box;
     box-sizing:        border-box;
 }
 
-.validation-item-container.has-error {
-    @extend .inner-border;
-    border-left: 3px solid #ef473a;
+.validation-item-container.ionic-style {
+    @extend .border-box-style;
+    
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    margin-top: -1px;
 }
 
-.list-inset .validation-item-container.has-error {
-    @extend .inner-border;
+.validation-item-container.ionic-style.has-error {
     border-left: 2px solid #ef473a;
 }
 
-.validation-item-container .error-message {
-    border-top:0;
-    color: #ef473a;
-    font-size: 14px;
-    white-space: normal;
-    padding-right: 0;
-    padding-top: 0;
-    padding-bottom: 4px;
+//-------------------------------------------------------
+// Item container
+//-------------------------------------------------------
+
+.validation-item-container .item-container {
+    -webkit-flex: 1 1 auto;
+    flex: 1 1 auto;
+}
+
+.validation-item-container .item {
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    
+    border: 0;
+    margin-top: 0;
+    margin-bottom: 0 !important;
+    margin-left: 0;
+}
+
+.validation-item-container.has-error:not(.ionic-style) input {
+    box-shadow: inset 2px 0 0 #ef473a;
+}
+
+//-------------------------------------------------------
+// Icon container
+//-------------------------------------------------------
+
+.validation-item-container .icon-container {
+    @extend .validation-item-flex;
+    
+    -webkit-flex: 0 0 auto;
+    flex: 0 0 auto; 
+    
+    font-size: 16px;
 }
 
 .validation-item-container .error-icon {
     margin-left: 7px;
     margin-right: 16px;
-    z-index: 1;
+    z-index: 10;
+    
     -webkit-align-self: center;
     align-self: center;
+}
+
+//-------------------------------------------------------
+// Error message container
+//-------------------------------------------------------
+
+.validation-item-container.ionic-style .error-message-container {
+    padding: 0 16px;
+}
+
+.validation-item-container .error-message {
+    color: #ef473a;
+    font-size: 14px;
+    white-space: normal;
+    padding-bottom: 4px;
 }
 
 /* 
