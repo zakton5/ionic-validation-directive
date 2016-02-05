@@ -4,15 +4,13 @@
             <div class="item-container">
                 <ng-transclude></ng-transclude>
             </div>
-            <div class="icon-container">
-                <i class="icon ion-alert-circled assertive error-icon" ng-show="formInvalid && (formTouched || formSubmitted)" on-touch="showErrorMessage = !showErrorMessage"></i>
+            <div class="icon-container" ng-show="showErrorIcon">
+                <i class="icon ion-alert-circled assertive error-icon" on-touch="showErrorMessage = !showErrorMessage"></i>
             </div>
         </div>
-        <div class="error-message-container">
-            <div class="error-message" ng-messages="formCtrl.$error" role="alert" ng-show="formInvalid && (formTouched || formSubmitted) && showErrorMessage">
-                <div ng-message-exp="key" ng-repeat="(key, value) in errors">
-                    {{ value }}
-                </div>
+        <div class="error-message" ng-messages="formCtrl.$error" role="alert">
+            <div class="error-text" ng-message-exp="key" ng-repeat="(key, value) in errors">
+                {{ value }}
             </div>
         </div>
     </div>
