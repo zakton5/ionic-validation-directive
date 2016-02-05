@@ -121,16 +121,10 @@ var htmlTemplates = htmlTemplates || {};htmlTemplates['ionic-validation-directiv
                     scope.$watch('formCtrl.$invalid', function (newVal, oldVal) {
                         toggleErrorIcon(newVal);
 
-                        // This is SOOOO important!! Fake errors will appear if an apply does not happen.
-                        // It is important that an $apply happens for formInvalid. This is done automatically by $timeout.
-                        // scope.$applyAsync(function (scope) {
-                        //     scope.formInvalid = newVal;
-                        // });
-                        
-                        $timeout(function () {
+                        // It is important that an $apply happens for formInvalid
+                        scope.$applyAsync(function (scope) {
                             scope.formInvalid = newVal;
-                        }, 50);
-                        
+                        });
                         
                         // Hide the error message area when the errors are fixed
                         if (newVal === false) {
