@@ -13,6 +13,7 @@
                 template: htmlTemplates['ionic-validation-directive-template.html'],
                 scope: { errors: '=' },
                 link: function (scope, element, attrs, formCtrl) {
+                    
                     //-------------------------------------------------------
                     // Setup
                     //-------------------------------------------------------
@@ -20,18 +21,20 @@
                     // This is the ng-form that wraps all of the inputs, selects, etc.
                     scope.formCtrl = formCtrl;
                 
-                    // These flags determine if the error is visible
+                    // These flags determine if the error icon and message is visible
                     scope.formTouched = false;
                     scope.formSubmitted = false;
                     scope.showErrorIcon = false;
                     scope.showErrorMessage = false;
                     
-                    // Determine whether the input style is ionic or not by searching for any
-                    // children with the item class.
-                    var itemNodes = element.children()[0].querySelectorAll('.item');
-                    scope.ionicStyle = itemNodes.length > 0;
+                    // Determine whether the input style is ionic or not by searching for any children with the item class.
+                    // Wait til the DOM is completely loaded before doing this.
+                    scope.$on('$ionicView.loaded', function () {
+                        var itemNodes = element.children()[0].querySelectorAll('.item');
+                        scope.ionicStyle = itemNodes.length > 0;
+                    })
                     
-                    
+                                        
                     
                     //-------------------------------------------------------
                     // Watchers
