@@ -1,3 +1,146 @@
+(function (doc, cssText) {
+    var styleEl = doc.createElement("style");
+    doc.getElementsByTagName("head")[0].appendChild(styleEl);
+    if (styleEl.styleSheet) {
+        if (!styleEl.styleSheet.disabled) {
+            styleEl.styleSheet.cssText = cssText;
+        }
+    } else {
+        try {
+            styleEl.innerHTML = cssText;
+        } catch (ignore) {
+            styleEl.innerText = cssText;
+        }
+    }
+}(document, ".validation-item-flex, .validation-item-container .icon-container {\n" +
+"  display: -moz-flex;\n" +
+"  display: -ms-flexbox;\n" +
+"  display: -webkit-flex;\n" +
+"  display: flex; }\n" +
+"\n" +
+".border-box-style, .validation-item-container {\n" +
+"  -moz-box-sizing: border-box;\n" +
+"  -webkit-box-sizing: border-box;\n" +
+"  box-sizing: border-box; }\n" +
+"\n" +
+".validation-item-container input, .validation-item-container select {\n" +
+"  width: 100%; }\n" +
+"\n" +
+".validation-item-container.ionic-style {\n" +
+"  margin-top: -1px;\n" +
+"  border: 1px solid #ddd; }\n" +
+"\n" +
+".validation-item-container.animate {\n" +
+"  -webkit-transition: border 0.2s linear;\n" +
+"  -moz-transition: border 0.2s linear;\n" +
+"  -o-transition: border 0.2s linear;\n" +
+"  transition: border 0.2s linear; }\n" +
+"\n" +
+".validation-item-container.ionic-style.has-error {\n" +
+"  border-left: 2px solid #ef473a; }\n" +
+"\n" +
+".list-inset ng-form:first-child .validation-item-container.ionic-style {\n" +
+"  border-top-left-radius: 2px;\n" +
+"  border-top-right-radius: 2px; }\n" +
+"\n" +
+".list-inset ng-form:last-child .validation-item-container.ionic-style {\n" +
+"  border-bottom-right-radius: 2px;\n" +
+"  border-bottom-left-radius: 2px; }\n" +
+"\n" +
+".validation-item-container .item-container {\n" +
+"  -webkit-flex: 1 1 auto;\n" +
+"  flex: 1 1 auto; }\n" +
+"\n" +
+".validation-item-container .item {\n" +
+"  -webkit-justify-content: space-between;\n" +
+"  justify-content: space-between;\n" +
+"  border: 0;\n" +
+"  border-radius: 0;\n" +
+"  margin-top: 0;\n" +
+"  margin-bottom: 0 !important;\n" +
+"  margin-left: 0; }\n" +
+"\n" +
+".validation-item-container.has-error:not(.ionic-style) input {\n" +
+"  box-shadow: inset 2px 0 0 #ef473a; }\n" +
+"\n" +
+".validation-item-container .icon-container {\n" +
+"  -webkit-flex: 0 0 auto;\n" +
+"  flex: 0 0 auto;\n" +
+"  font-size: 16px;\n" +
+"  max-width: 0;\n" +
+"  opacity: 0; }\n" +
+"\n" +
+".validation-item-container.animate .icon-container {\n" +
+"  -webkit-transition: opacity 0.2s ease-in-out, max-width 0.2s ease-out;\n" +
+"  -moz-transition: opacity 0.2s ease-in-out, max-width 0.2s ease-out;\n" +
+"  -o-transition: opacity 0.2s ease-in-out, max-width 0.2s ease-out;\n" +
+"  transition: opacity 0.2s ease-in-out, max-width 0.2s ease-out; }\n" +
+"\n" +
+".validation-item-container.has-error .icon-container {\n" +
+"  max-width: 40px;\n" +
+"  opacity: 1; }\n" +
+"\n" +
+".validation-item-container .error-icon {\n" +
+"  -webkit-align-self: center;\n" +
+"  align-self: center;\n" +
+"  margin-left: 7px;\n" +
+"  z-index: 100; }\n" +
+"\n" +
+".validation-item-container.ionic-style .error-icon {\n" +
+"  margin-right: 16px; }\n" +
+"\n" +
+".validation-item-container .error-message {\n" +
+"  color: #ef473a;\n" +
+"  font-size: 14px;\n" +
+"  white-space: normal;\n" +
+"  overflow: hidden;\n" +
+"  max-height: 0; }\n" +
+"\n" +
+".validation-item-container.animate .error-message {\n" +
+"  -webkit-transition: max-height 0.2s ease-in-out, padding-bottom 0.2s ease-in-out;\n" +
+"  -moz-transition: max-height 0.2s ease-in-out, padding-bottom 0.2s ease-in-out;\n" +
+"  -o-transition: max-height 0.2s ease-in-out, padding-bottom 0.2s ease-in-out;\n" +
+"  transition: max-height 0.2s ease-in-out, padding-bottom 0.2s ease-in-out; }\n" +
+"\n" +
+".validation-item-container.ionic-style .error-message {\n" +
+"  padding: 0 16px; }\n" +
+"\n" +
+".validation-item-container.has-error.message-open.ionic-style .error-message {\n" +
+"  padding-bottom: 4px; }\n" +
+"\n" +
+"/*\n" +
+"\n" +
+"These styles are used if multiple inputs are within a validation item\n" +
+"They bunch the items closer together and remove borders between them\n" +
+"\n" +
+"I cannot think of another reason to have multiple inputs within a single validation item\n" +
+"unless it is to have a directive using ngModelController that requires multiple inputs\n" +
+"\n" +
+"*/\n" +
+".validation-item-container .item.item-input:not(:first-child) {\n" +
+"  padding-top: 0; }\n" +
+"\n" +
+".validation-item-container .item.item-input:not(:last-child) {\n" +
+"  padding-bottom: 0; }\n" +
+"\n" +
+".validation-item-container .item.item-input.item-select:first-of-type > select {\n" +
+"  margin-top: 7px; }\n" +
+"\n" +
+".validation-item-container .item.item-input.item-select:last-of-type > select {\n" +
+"  margin-bottom: 5px; }\n" +
+"\n" +
+".validation-item-container .item.item-input.item-select:first-of-type:not(:last-of-type) > select {\n" +
+"  margin-bottom: -2px; }\n" +
+"\n" +
+".validation-item-container .item.item-input.item-select:last-of-type:not(:first-of-type) > select {\n" +
+"  margin-top: 2px; }\n" +
+"\n" +
+".validation-item-container .item.item-input.item-select:first-of-type:not(:last-of-type):after {\n" +
+"  margin-top: 2px; }\n" +
+"\n" +
+".validation-item-container .item.item-input.item-select:last-of-type:not(:first-of-type):after {\n" +
+"  margin-top: -4px; }"));
+
 var htmlTemplates = htmlTemplates || {};htmlTemplates['ionic-validation-directive-template.html'] = '<ng-form>\n' +
     '    <div class="validation-item-container" ng-class="{ \'has-error\': formInvalid && (formTouched || formSubmitted), \'message-open\': showErrorMessage, \'ionic-style\': ionicStyle, \'animate\': animate }">\n' +
     '        <div class="validation-item-flex">\n' +
