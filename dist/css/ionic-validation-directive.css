@@ -4,27 +4,32 @@
   display: -webkit-flex;
   display: flex; }
 
-.border-box-style, .validation-item-container.ionic-style {
+.border-box-style, .validation-item-container {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box; }
 
+.validation-item-container input, .validation-item-container select {
+  width: 100%; }
+
 .validation-item-container.ionic-style {
-  border: 1px solid #ddd;
   margin-top: -1px;
-  -webkit-transition: border-left 0.2s linear;
-  -moz-transition: border-left 0.2s linear;
-  -o-transition: border-left 0.2s linear;
-  transition: border-left 0.2s linear; }
+  border: 1px solid #ddd; }
+
+.validation-item-container.animate {
+  -webkit-transition: border 0.2s linear;
+  -moz-transition: border 0.2s linear;
+  -o-transition: border 0.2s linear;
+  transition: border 0.2s linear; }
 
 .validation-item-container.ionic-style.has-error {
   border-left: 2px solid #ef473a; }
 
-.list-inset ng-form:first-child .validation-item-container {
+.list-inset ng-form:first-child .validation-item-container.ionic-style {
   border-top-left-radius: 2px;
   border-top-right-radius: 2px; }
 
-.list-inset ng-form:last-child .validation-item-container {
+.list-inset ng-form:last-child .validation-item-container.ionic-style {
   border-bottom-right-radius: 2px;
   border-bottom-left-radius: 2px; }
 
@@ -49,11 +54,13 @@
   flex: 0 0 auto;
   font-size: 16px;
   max-width: 0;
-  opacity: 0;
-  -webkit-transition: opacity 0.3s ease-in-out, max-width 0.3s ease-in-out;
-  -moz-transition: opacity 0.3s ease-in-out, max-width 0.3s ease-in-out;
-  -o-transition: opacity 0.3s ease-in-out, max-width 0.3s ease-in-out;
-  transition: opacity 0.3s ease-in-out, max-width 0.3s ease-in-out; }
+  opacity: 0; }
+
+.validation-item-container.animate .icon-container {
+  -webkit-transition: opacity 0.2s ease-in-out, max-width 0.2s ease-out;
+  -moz-transition: opacity 0.2s ease-in-out, max-width 0.2s ease-out;
+  -o-transition: opacity 0.2s ease-in-out, max-width 0.2s ease-out;
+  transition: opacity 0.2s ease-in-out, max-width 0.2s ease-out; }
 
 .validation-item-container.has-error .icon-container {
   max-width: 40px;
@@ -73,21 +80,19 @@
   font-size: 14px;
   white-space: normal;
   overflow: hidden;
-  max-height: 0;
-  opacity: 0;
-  -webkit-transition: max-height 0.2s ease-in-out, opacity 0.2s ease-in-out, padding-bottom 0.2s ease-in-out;
-  -moz-transition: max-height 0.2s ease-in-out, opacity 0.2s ease-in-out, padding-bottom 0.2s ease-in-out;
-  -o-transition: max-height 0.2s ease-in-out, opacity 0.2s ease-in-out, padding-bottom 0.2s ease-in-out;
-  transition: max-height 0.2s ease-in-out, opacity 0.2s ease-in-out, padding-bottom 0.2s ease-in-out; }
+  max-height: 0; }
+
+.validation-item-container.animate .error-message {
+  -webkit-transition: max-height 0.2s ease-in-out, padding-bottom 0.2s ease-in-out;
+  -moz-transition: max-height 0.2s ease-in-out, padding-bottom 0.2s ease-in-out;
+  -o-transition: max-height 0.2s ease-in-out, padding-bottom 0.2s ease-in-out;
+  transition: max-height 0.2s ease-in-out, padding-bottom 0.2s ease-in-out; }
 
 .validation-item-container.ionic-style .error-message {
   padding: 0 16px; }
 
 .validation-item-container.has-error.message-open.ionic-style .error-message {
   padding-bottom: 4px; }
-
-.validation-item-container.has-error.message-open .error-message {
-  opacity: 1; }
 
 /* 
 

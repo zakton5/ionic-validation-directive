@@ -1,16 +1,16 @@
 var htmlTemplates = htmlTemplates || {};htmlTemplates['ionic-validation-directive-template.html'] = '<ng-form>\n' +
-    '    <div class="validation-item-container" ng-class="{ \'has-error\': formInvalid && (formTouched || formSubmitted), \'message-open\': showErrorMessage, \'ionic-style\': ionicStyle }">\n' +
+    '    <div class="validation-item-container" ng-class="{ \'has-error\': formInvalid && (formTouched || formSubmitted), \'message-open\': showErrorMessage, \'ionic-style\': ionicStyle, \'animate\': animate }">\n' +
     '        <div class="validation-item-flex">\n' +
     '            <div class="item-container">\n' +
     '                <ng-transclude></ng-transclude>\n' +
     '            </div>\n' +
-    '            <div class="icon-container" ng-show="showErrorIcon">\n' +
+    '            <div class="icon-container">\n' +
     '                <i class="icon ion-alert-circled assertive error-icon" on-touch="showErrorMessage = !showErrorMessage"></i>\n' +
     '            </div>\n' +
     '        </div>\n' +
     '        <div class="error-message" ng-messages="formCtrl.$error" role="alert">\n' +
-    '            <div class="error-text" ng-message-exp="key" ng-repeat="(key, value) in errors">\n' +
-    '                {{ value }}\n' +
+    '            <div class="error-text" ng-message-exp="key" ng-repeat="(key, value) in ::errors">\n' +
+    '                {{ ::value }}\n' +
     '            </div>\n' +
     '        </div>\n' +
     '    </div>\n' +
@@ -36,24 +36,29 @@ var htmlTemplates = htmlTemplates || {};htmlTemplates['ionic-validation-directiv
                     // Setup
                     //-------------------------------------------------------
                     
-                    // This is the ng-form that wraps all of the inputs, selects, etc.
+                    // This is the ng-form that wraps all of the inputs, selects, etc. within the directive
                     scope.formCtrl = formCtrl;
-                
-                    // These flags determine if the error icon and message is visible
+
                     scope.formTouched = false;
                     scope.formSubmitted = false;
                     scope.showErrorIcon = false;
                     scope.showErrorMessage = false;
-                    
-                    // Determine whether the input style is ionic or not by searching for any children with the item class.
-                    // Wait til the DOM is completely loaded before doing this.
-                    scope.$on('$ionicView.loaded', function () {
-                        var itemNodes = element.children()[0].querySelectorAll('.item');
-                        scope.ionicStyle = itemNodes.length > 0;
-                    })
-                    
-                                        
-                    
+                    scope.ionicStyle = attrs.ionicStyle === "false" ? false : true;
+
+                    // This was used to automatically check for ionic style inputs, but it causes a delay in between
+                    // the time that the page loads and the time that the border around the input loads.
+                    // $timeout(function() {
+                    //     var itemNodes = element.children()[0].querySelectorAll('.item');
+                    //     scope.ionicStyle = itemNodes.length > 0;
+                    // });
+
+
+                    // Only add the animation class the directive has finished loading in the DOM.
+                    // This prevents unwanted animations from playing when the directive first loads.
+                    $timeout(function () {
+                        scope.animate = attrs.animate === "false" ? false : true;
+                    });
+                                  
                     //-------------------------------------------------------
                     // Watchers
                     //-------------------------------------------------------
@@ -62,49 +67,16 @@ var htmlTemplates = htmlTemplates || {};htmlTemplates['ionic-validation-directiv
                     // of whether they have been touched or not. Doing this allows showing the error message
                     // to the user only when he/she has shifted focus to another field elsewhere.
                     angular.forEach(formCtrl, function (value, key) {
+                        // Only watch objects with ng-model
                         if (typeof value === 'object' && value.hasOwnProperty('$modelValue')) {
                             scope.$watch(function () { return value.$touched; }, function (newVal, oldVal) {
                                 if (newVal) {
-                                    toggleErrorIcon(true);
-                                    
-                                    // Requires a bit of delay for the css transition to play for the first time for some unknown reason
-                                    $timeout(function () {
-                                        scope.formTouched = true;
-                                    }, 50);
+                                    scope.formTouched = true;
                                 }
                             });
                         }
                     });
 
-                    function toggleErrorIcon(show) {
-                        // If it is supposed to become visible, show it immediately so that the animation will be seen
-                        if (show && formCtrl.$invalid) {
-                            scope.showErrorIcon = true;
-                        } 
-                        // Otherwise, wait until the animation is over
-                        else {
-                            $timeout(function () {
-                                scope.showErrorIcon = false;
-                            }, 200);
-                        }
-                    }
-                
-                    // Catch the broadcast from the page's controller indicating that the parent (master) form has been submitted
-                    scope.$on('formSubmitted', function (e, submitted) {
-                        if (!submitted) submitted = true;
-
-                        toggleErrorIcon(submitted);
-                        scope.formSubmitted = submitted;
-                    });
-                
-                    // This watch is used to catch touched events from child directives
-                    scope.$on('formTouched', function (e, touched) {
-                        if (!touched) touched = true;
-
-                        toggleErrorIcon(touched);
-                        scope.formTouched = touched;
-                    });
-                    
                     // When the message is shown or hidden, set the max height of the error-message-container so the transition starts
                     scope.$watch('showErrorMessage', function (newVal) {
                         var messageContainer = element.children()[0].querySelector('.error-message');
@@ -122,7 +94,6 @@ var htmlTemplates = htmlTemplates || {};htmlTemplates['ionic-validation-directiv
 
                     // When the form's validity changes, refresh the scope and close the message container if it is valid
                     scope.$watch('formCtrl.$invalid', function (newVal, oldVal) {
-                        toggleErrorIcon(newVal);
 
                         // It is important that an $apply happens for formInvalid
                         scope.$applyAsync(function (scope) {
@@ -134,6 +105,24 @@ var htmlTemplates = htmlTemplates || {};htmlTemplates['ionic-validation-directiv
                             scope.showErrorMessage = false;
                         }
                     });
+                    
+                    
+                    //-------------------------------------------------------
+                    // Event handlers
+                    //-------------------------------------------------------
+                
+                    // Catch the $broadcast('formSubmitted') from the page's controller indicating that the parent form has been submitted
+                    scope.$on('formSubmitted', function (e, submitted) {
+                        if (!submitted) submitted = true;
+                        scope.formSubmitted = submitted;
+                    });
+                
+                    // This watch is used to catch $emit('formTouched') events from child directives
+                    scope.$on('formTouched', function (e, touched) {
+                        if (!touched) touched = true;
+                        scope.formTouched = touched;
+                    });
+
 
 
                 }

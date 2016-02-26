@@ -1,16 +1,16 @@
 <ng-form>
-    <div class="validation-item-container" ng-class="{ 'has-error': formInvalid && (formTouched || formSubmitted), 'message-open': showErrorMessage, 'ionic-style': ionicStyle }">
+    <div class="validation-item-container" ng-class="{ 'has-error': formInvalid && (formTouched || formSubmitted), 'message-open': showErrorMessage, 'ionic-style': ionicStyle, 'animate': animate }">
         <div class="validation-item-flex">
             <div class="item-container">
                 <ng-transclude></ng-transclude>
             </div>
-            <div class="icon-container" ng-show="showErrorIcon">
+            <div class="icon-container">
                 <i class="icon ion-alert-circled assertive error-icon" on-touch="showErrorMessage = !showErrorMessage"></i>
             </div>
         </div>
         <div class="error-message" ng-messages="formCtrl.$error" role="alert">
-            <div class="error-text" ng-message-exp="key" ng-repeat="(key, value) in errors">
-                {{ value }}
+            <div class="error-text" ng-message-exp="key" ng-repeat="(key, value) in ::errors">
+                {{ ::value }}
             </div>
         </div>
     </div>

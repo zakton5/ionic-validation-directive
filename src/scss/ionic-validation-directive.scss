@@ -28,9 +28,9 @@
     transition: $transition;
 }
 
-$error-icon-container-transition: opacity 0.3s ease-in-out, max-width 0.3s ease-in-out;
-$error-bar-transition: border-left 0.2s linear;
-$error-message-transition: max-height 0.2s ease-in-out, opacity 0.2s ease-in-out, padding-bottom 0.2s ease-in-out;
+$error-icon-container-transition: opacity 0.2s ease-in-out, max-width 0.2s ease-out;
+$error-bar-transition: border 0.2s linear;
+$error-message-transition: max-height 0.2s ease-in-out, padding-bottom 0.2s ease-in-out;
 
 
 
@@ -38,12 +38,20 @@ $error-message-transition: max-height 0.2s ease-in-out, opacity 0.2s ease-in-out
 // Outer container
 //-------------------------------------------------------
 
+.validation-item-container {
+    @extend .border-box-style; 
+}
+
+.validation-item-container input, .validation-item-container select {
+    width: 100%;
+}
+
 .validation-item-container.ionic-style {
-    @extend .border-box-style;
-    
-    border: 1px solid #ddd;
     margin-top: -1px;
-    
+    border: 1px solid #ddd;
+}
+
+.validation-item-container.animate {
     @include transition($error-bar-transition);
 }
 
@@ -53,13 +61,13 @@ $error-message-transition: max-height 0.2s ease-in-out, opacity 0.2s ease-in-out
 
 
 // Round top border corners in first list item
-.list-inset ng-form:first-child .validation-item-container {
+.list-inset ng-form:first-child .validation-item-container.ionic-style {
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
 }
 
 // Round borders in last item of list
-.list-inset ng-form:last-child .validation-item-container {
+.list-inset ng-form:last-child .validation-item-container.ionic-style {
     border-bottom-right-radius: 2px;
     border-bottom-left-radius: 2px;
 }
@@ -108,6 +116,9 @@ $error-message-transition: max-height 0.2s ease-in-out, opacity 0.2s ease-in-out
     // Transition stuff
     max-width: 0;
     opacity: 0;
+}
+
+.validation-item-container.animate .icon-container {
     @include transition($error-icon-container-transition);
 }
 
@@ -144,8 +155,10 @@ $error-message-transition: max-height 0.2s ease-in-out, opacity 0.2s ease-in-out
     // Used for the animations
     overflow: hidden;
     max-height: 0;
-    opacity: 0;
-    
+    // opacity: 0;
+}
+
+.validation-item-container.animate .error-message  {
     @include transition($error-message-transition);
 }
 
@@ -157,11 +170,6 @@ $error-message-transition: max-height 0.2s ease-in-out, opacity 0.2s ease-in-out
 // Adds botttom padding when the error message is open
 .validation-item-container.has-error.message-open.ionic-style .error-message {
     padding-bottom: 4px;
-}
-
-// Used for opacity transition, which is required for non-ionic inputs. For some reason they stay visible if the opacity transition is not used
-.validation-item-container.has-error.message-open .error-message {
-    opacity: 1;
 }
 
 
