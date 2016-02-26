@@ -15,14 +15,22 @@ bower install ionic-validation-directive
 
 Include the js and css file in your index.html file:
 ```html
-<link href="lib/ionic-validation-directive/dist/css/ionic-validation-directive.css" rel="stylesheet">
-<script src="lib/ionic-validation-directive/dist/js/ionic-validation-directive.js"></script>
+<script src="lib/ionic-validation-directive/dist/ionic-validation-directive.bundle.min.js"></script>
 ```
 
 Add the module `ionic-validation-directive` to your application dependencies:
 ```javascript
 angular.module('starter', ['ionic', 'ngMessages', 'ionic-validation-directive'])
 ```
+
+## Options
+
+You can override some of the default settings for the directive by placing attributes on the directive. See below for usage examples.
+
+| Option      | Default | Description |
+|-------------|-----|-----|
+| ionic-style | true | Determines whether the directive will be styled as an ionic style input or not |
+| animate     | true | Determines whether the error icon and error message will use CSS transitions |
 
 ## Examples
 
@@ -55,6 +63,13 @@ You will need to provide an object that contains key, value pairs of the errors 
         <option>Writer</option>
     </select>
   </label>
+</validation-item>
+```
+
+###### Regular input with no animation
+```html
+<validation-item errors="{ required: 'This field is required' }" ionic-style="false" animate="false">
+  <input type="text" name="username" ng-model="formInfo.username" required>
 </validation-item>
 ```
 
