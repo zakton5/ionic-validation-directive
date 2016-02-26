@@ -5,6 +5,9 @@
   "main": [
     "dist/js/ionic-validation-directive.js"
   ],
+  "dependencies": {
+    "angular-messages": "latest"
+  }
   "authors": [
     "Zachary Keeton <zkeeton5@gmail.com>"
   ],
