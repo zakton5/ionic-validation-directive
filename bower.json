@@ -1,13 +1,13 @@
 {
   "name": "ionic-validation-directive",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "A directive for ionic that wraps form inputs and displays their errors",
   "main": [
     "dist/js/ionic-validation-directive.js"
   ],
   "dependencies": {
     "angular-messages": "latest"
-  }
+  },
   "authors": [
     "Zachary Keeton <zkeeton5@gmail.com>"
   ],
