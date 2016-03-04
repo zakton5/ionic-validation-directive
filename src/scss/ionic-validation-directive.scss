@@ -15,7 +15,7 @@
     box-sizing:        border-box;
 }
 
-
+$error-color: #ef473a;
 
 //-------------------------------------------------------
 // Transitions
@@ -28,9 +28,9 @@
     transition: $transition;
 }
 
-$error-icon-container-transition: opacity 0.2s ease-in-out, max-width 0.2s ease-out;
-$error-bar-transition: border 0.2s linear;
-$error-message-transition: max-height 0.2s ease-in-out, padding-bottom 0.2s ease-in-out;
+$error-icon-container-transition: opacity 0.2s ease-out, max-width 0.2s ease-out;
+$error-style-transition: box-shadow 0.2s linear, border 0.2s linear;
+$error-message-transition: opacity 0.2s ease-in-out, max-height 0.2s ease-in-out, padding-bottom 0.2s ease-in-out;
 
 
 
@@ -42,36 +42,48 @@ $error-message-transition: max-height 0.2s ease-in-out, padding-bottom 0.2s ease
     @extend .border-box-style; 
 }
 
+// Makes sure that all inputs fill the width of the container
 .validation-item-container input, .validation-item-container select {
     width: 100%;
 }
 
+// Mimics style of ionic inputs
 .validation-item-container.ionic-style {
-    margin-top: -1px;
+    margin: -1px;
     border: 1px solid #ddd;
 }
-
-.validation-item-container.animate {
-    @include transition($error-bar-transition);
+.list-inset .validation-item-container.ionic-style {
+    margin-left: 0;
+    margin-right: 0;
 }
-
-.validation-item-container.ionic-style.has-error {
-    border-left: 2px solid #ef473a;
-}
-
 
 // Round top border corners in first list item
 .list-inset ng-form:first-child .validation-item-container.ionic-style {
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
 }
-
-// Round borders in last item of list
+// Round bottom border corners in last list item
 .list-inset ng-form:last-child .validation-item-container.ionic-style {
     border-bottom-right-radius: 2px;
     border-bottom-left-radius: 2px;
 }
 
+// TODO: test this
+// Raises inputs with errors so that borders will appear completely on top of other items without errors
+.validation-item-container.ionic-style.has-error {
+    z-index: 10;
+    position: relative;
+    -webkit-appearance: none;
+}
+
+.validation-item-container.animate {
+    @include transition($error-style-transition);
+}
+    
+// Bar styled error
+.validation-item-container.ionic-style.has-error.default-error-class {
+    box-shadow: inset 13px 0 0 -10px $error-color;
+}
 
 //-------------------------------------------------------
 // Item container
@@ -82,22 +94,27 @@ $error-message-transition: max-height 0.2s ease-in-out, padding-bottom 0.2s ease
     flex: 1 1 auto;
 }
 
-.validation-item-container .item {
-    -webkit-justify-content: space-between;
-    justify-content: space-between;
-    
+// Forces items to use margin instead of padding so that box-shadows will show up
+.validation-item-container .item.item-input {
     border: 0;
     border-radius: 0;
-    margin-top: 0;
-    margin-bottom: 0 !important;
-    margin-left: 0;
+    padding: 0;
+    margin-top: 6px;
+    margin-bottom: 5px;
+    margin-left: 16px;
 }
 
-// Regular input error bar
-.validation-item-container.has-error:not(.ionic-style) input {
-    box-shadow: inset 2px 0 0 #ef473a;
+.validation-item-container.animate:not(.ionic-style) input {
+    @include transition($error-style-transition);
 }
 
+.validation-item-container:not(.ionic-style) input {
+     -webkit-appearance: none;
+}
+
+.validation-item-container.has-error:not(.ionic-style) input.default-error-class {
+     box-shadow: inset 13px 0 0 -10px $error-color;
+}
 
 
 
@@ -130,10 +147,13 @@ $error-message-transition: max-height 0.2s ease-in-out, padding-bottom 0.2s ease
 .validation-item-container .error-icon {
     -webkit-align-self: center;
     align-self: center;
-
+    
     margin-left: 7px;
-    //margin-right:16px;
     z-index: 100;
+}
+
+.validation-item-container .error-icon.assertive {
+    color: $error-color;
 }
 
 .validation-item-container.ionic-style .error-icon {
@@ -145,21 +165,22 @@ $error-message-transition: max-height 0.2s ease-in-out, padding-bottom 0.2s ease
 // Error message container
 //-------------------------------------------------------
 
-
-
 .validation-item-container .error-message {
-    color: #ef473a;
     font-size: 14px;
     white-space: normal;
     
     // Used for the animations
     overflow: hidden;
     max-height: 0;
-    // opacity: 0;
+    opacity: 0;
 }
 
 .validation-item-container.animate .error-message  {
     @include transition($error-message-transition);
+}
+
+.validation-item-container.has-error.message-open .error-message {
+    opacity: 1;
 }
 
 // Side padding for ionic style
@@ -168,7 +189,7 @@ $error-message-transition: max-height 0.2s ease-in-out, padding-bottom 0.2s ease
 }
 
 // Adds botttom padding when the error message is open
-.validation-item-container.has-error.message-open.ionic-style .error-message {
+.validation-item-container.ionic-style.has-error.message-open .error-message {
     padding-bottom: 4px;
 }
 

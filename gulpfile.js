@@ -14,7 +14,8 @@ var gulp = require('gulp'),
     jsifyTemplates = require('gulp-jsify-html-templates'),
     css2js = require('gulp-css2js'),
     addSrc = require('gulp-add-src'),
-    order = require('gulp-order');
+    order = require('gulp-order'),
+    gulpsync = require('gulp-sync')(gulp);
 
 // define the default task and add the watch task to it
 gulp.task('default', ['build', 'watch']);
@@ -49,12 +50,21 @@ gulp.task('build-js', function (cb) {
 })
 
 gulp.task('install-to-example', function () {
-    return gulp.src(['*src/**/*', '*dist/**/*', './*.*'])
-        .pipe(gulp.dest('./ValidationItemDirectiveExampleApp/www/lib/ionic-validation-directive'));
+    del(['./ValidationItemDirectiveExampleApp/www/lib/ionic-validation-directive']).then(paths => {
+        console.log('Deleted files and folders:\n', paths.join('\n'));
+
+        return gulp.src(['*src/**/*', '*dist/**/*', './*.*'])
+            .pipe(gulp.dest('./ValidationItemDirectiveExampleApp/www/lib/ionic-validation-directive'));
+    });
 });
 
+gulp.task('del-temp', function () {
+    del(['dist/temp']).then(paths => {
+        console.log('Deleted files and folders:\n', paths.join('\n'));
+    });
+});
 
-gulp.task('make-bundle', ['build-css', 'build-js'], function () {
+gulp.task('make-bundle', gulpsync.sync(['build-css', 'build-js']), function () {
     return gulp.src(['dist/temp/styles.js', 'dist/temp/ionic-validation-directive.js'])
     // .pipe(order(['dist/temp/styles.js', 'dist/temp/ionic-validation-directive.js']))
         .pipe(concat('ionic-validation-directive.bundle.js'))
@@ -64,10 +74,5 @@ gulp.task('make-bundle', ['build-css', 'build-js'], function () {
         .pipe(gulp.dest('./dist/'));
 });
 
-gulp.task('del-temp', ['make-bundle'], function () {
-    del(['dist/temp']).then(paths => {
-        console.log('Deleted files and folders:\n', paths.join('\n'));
-    });
-});
 
-gulp.task('build', ['jshint', 'del-temp'/*, 'install-to-example'*/]);
+gulp.task('build', gulpsync.sync(['jshint', 'make-bundle', 'del-temp', 'install-to-example']));

@@ -27,17 +27,12 @@
 "  width: 100%; }\n" +
 "\n" +
 ".validation-item-container.ionic-style {\n" +
-"  margin-top: -1px;\n" +
+"  margin: -1px;\n" +
 "  border: 1px solid #ddd; }\n" +
 "\n" +
-".validation-item-container.animate {\n" +
-"  -webkit-transition: border 0.2s linear;\n" +
-"  -moz-transition: border 0.2s linear;\n" +
-"  -o-transition: border 0.2s linear;\n" +
-"  transition: border 0.2s linear; }\n" +
-"\n" +
-".validation-item-container.ionic-style.has-error {\n" +
-"  border-left: 2px solid #ef473a; }\n" +
+".list-inset .validation-item-container.ionic-style {\n" +
+"  margin-left: 0;\n" +
+"  margin-right: 0; }\n" +
 "\n" +
 ".list-inset ng-form:first-child .validation-item-container.ionic-style {\n" +
 "  border-top-left-radius: 2px;\n" +
@@ -47,21 +42,43 @@
 "  border-bottom-right-radius: 2px;\n" +
 "  border-bottom-left-radius: 2px; }\n" +
 "\n" +
+".validation-item-container.ionic-style.has-error {\n" +
+"  z-index: 10;\n" +
+"  position: relative;\n" +
+"  -webkit-appearance: none; }\n" +
+"\n" +
+".validation-item-container.animate {\n" +
+"  -webkit-transition: box-shadow 0.2s linear, border 0.2s linear;\n" +
+"  -moz-transition: box-shadow 0.2s linear, border 0.2s linear;\n" +
+"  -o-transition: box-shadow 0.2s linear, border 0.2s linear;\n" +
+"  transition: box-shadow 0.2s linear, border 0.2s linear; }\n" +
+"\n" +
+".validation-item-container.ionic-style.has-error.default-error-class {\n" +
+"  box-shadow: inset 13px 0 0 -10px #ef473a; }\n" +
+"\n" +
 ".validation-item-container .item-container {\n" +
 "  -webkit-flex: 1 1 auto;\n" +
 "  flex: 1 1 auto; }\n" +
 "\n" +
-".validation-item-container .item {\n" +
-"  -webkit-justify-content: space-between;\n" +
-"  justify-content: space-between;\n" +
+".validation-item-container .item.item-input {\n" +
 "  border: 0;\n" +
 "  border-radius: 0;\n" +
-"  margin-top: 0;\n" +
-"  margin-bottom: 0 !important;\n" +
-"  margin-left: 0; }\n" +
+"  padding: 0;\n" +
+"  margin-top: 6px;\n" +
+"  margin-bottom: 5px;\n" +
+"  margin-left: 16px; }\n" +
 "\n" +
-".validation-item-container.has-error:not(.ionic-style) input {\n" +
-"  box-shadow: inset 2px 0 0 #ef473a; }\n" +
+".validation-item-container.animate:not(.ionic-style) input {\n" +
+"  -webkit-transition: box-shadow 0.2s linear, border 0.2s linear;\n" +
+"  -moz-transition: box-shadow 0.2s linear, border 0.2s linear;\n" +
+"  -o-transition: box-shadow 0.2s linear, border 0.2s linear;\n" +
+"  transition: box-shadow 0.2s linear, border 0.2s linear; }\n" +
+"\n" +
+".validation-item-container:not(.ionic-style) input {\n" +
+"  -webkit-appearance: none; }\n" +
+"\n" +
+".validation-item-container.has-error:not(.ionic-style) input.default-error-class {\n" +
+"  box-shadow: inset 13px 0 0 -10px #ef473a; }\n" +
 "\n" +
 ".validation-item-container .icon-container {\n" +
 "  -webkit-flex: 0 0 auto;\n" +
@@ -71,10 +88,10 @@
 "  opacity: 0; }\n" +
 "\n" +
 ".validation-item-container.animate .icon-container {\n" +
-"  -webkit-transition: opacity 0.2s ease-in-out, max-width 0.2s ease-out;\n" +
-"  -moz-transition: opacity 0.2s ease-in-out, max-width 0.2s ease-out;\n" +
-"  -o-transition: opacity 0.2s ease-in-out, max-width 0.2s ease-out;\n" +
-"  transition: opacity 0.2s ease-in-out, max-width 0.2s ease-out; }\n" +
+"  -webkit-transition: opacity 0.2s ease-out, max-width 0.2s ease-out;\n" +
+"  -moz-transition: opacity 0.2s ease-out, max-width 0.2s ease-out;\n" +
+"  -o-transition: opacity 0.2s ease-out, max-width 0.2s ease-out;\n" +
+"  transition: opacity 0.2s ease-out, max-width 0.2s ease-out; }\n" +
 "\n" +
 ".validation-item-container.has-error .icon-container {\n" +
 "  max-width: 40px;\n" +
@@ -86,26 +103,32 @@
 "  margin-left: 7px;\n" +
 "  z-index: 100; }\n" +
 "\n" +
+".validation-item-container .error-icon.assertive {\n" +
+"  color: #ef473a; }\n" +
+"\n" +
 ".validation-item-container.ionic-style .error-icon {\n" +
 "  margin-right: 16px; }\n" +
 "\n" +
 ".validation-item-container .error-message {\n" +
-"  color: #ef473a;\n" +
 "  font-size: 14px;\n" +
 "  white-space: normal;\n" +
 "  overflow: hidden;\n" +
-"  max-height: 0; }\n" +
+"  max-height: 0;\n" +
+"  opacity: 0; }\n" +
 "\n" +
 ".validation-item-container.animate .error-message {\n" +
-"  -webkit-transition: max-height 0.2s ease-in-out, padding-bottom 0.2s ease-in-out;\n" +
-"  -moz-transition: max-height 0.2s ease-in-out, padding-bottom 0.2s ease-in-out;\n" +
-"  -o-transition: max-height 0.2s ease-in-out, padding-bottom 0.2s ease-in-out;\n" +
-"  transition: max-height 0.2s ease-in-out, padding-bottom 0.2s ease-in-out; }\n" +
+"  -webkit-transition: opacity 0.2s ease-in-out, max-height 0.2s ease-in-out, padding-bottom 0.2s ease-in-out;\n" +
+"  -moz-transition: opacity 0.2s ease-in-out, max-height 0.2s ease-in-out, padding-bottom 0.2s ease-in-out;\n" +
+"  -o-transition: opacity 0.2s ease-in-out, max-height 0.2s ease-in-out, padding-bottom 0.2s ease-in-out;\n" +
+"  transition: opacity 0.2s ease-in-out, max-height 0.2s ease-in-out, padding-bottom 0.2s ease-in-out; }\n" +
+"\n" +
+".validation-item-container.has-error.message-open .error-message {\n" +
+"  opacity: 1; }\n" +
 "\n" +
 ".validation-item-container.ionic-style .error-message {\n" +
 "  padding: 0 16px; }\n" +
 "\n" +
-".validation-item-container.has-error.message-open.ionic-style .error-message {\n" +
+".validation-item-container.ionic-style.has-error.message-open .error-message {\n" +
 "  padding-bottom: 4px; }\n" +
 "\n" +
 "/*\n" +
@@ -142,16 +165,16 @@
 "  margin-top: -4px; }"));
 
 var htmlTemplates = htmlTemplates || {};htmlTemplates['ionic-validation-directive-template.html'] = '<ng-form>\n' +
-    '    <div class="validation-item-container" ng-class="{ \'has-error\': formInvalid && (formTouched || formSubmitted), \'message-open\': showErrorMessage, \'ionic-style\': ionicStyle, \'animate\': animate }">\n' +
+    '    <div class="validation-item-container" ng-class="{ \'has-error\': showError(), \'message-open\': showErrorMessage, \'ionic-style\': ionicStyle, \'animate\': animate }">\n' +
     '        <div class="validation-item-flex">\n' +
     '            <div class="item-container">\n' +
     '                <ng-transclude></ng-transclude>\n' +
     '            </div>\n' +
-    '            <div class="icon-container">\n' +
-    '                <i class="icon ion-alert-circled assertive error-icon" on-touch="showErrorMessage = !showErrorMessage"></i>\n' +
+    '            <div class="icon-container" on-touch="showErrorMessage = !showErrorMessage">\n' +
+    '                <i class="error-icon" ng-class="::errorIcon"></i>\n' +
     '            </div>\n' +
     '        </div>\n' +
-    '        <div class="error-message" ng-messages="formCtrl.$error" role="alert">\n' +
+    '        <div class="error-message" ng-class="::errorColor" ng-messages="formCtrl.$error" role="alert">\n' +
     '            <div class="error-text" ng-message-exp="key" ng-repeat="(key, value) in ::errors">\n' +
     '                {{ ::value }}\n' +
     '            </div>\n' +
@@ -164,7 +187,7 @@ var htmlTemplates = htmlTemplates || {};htmlTemplates['ionic-validation-directiv
     'use strict';
     angular.module('ionic-validation-directive', [])
 
-        .directive('validationItem', ["$timeout", function ($timeout) {
+        .directive('validationItem', ["$timeout", "$animate", function ($timeout, $animate) {
 
             return {
                 restrict: 'E',
@@ -174,7 +197,7 @@ var htmlTemplates = htmlTemplates || {};htmlTemplates['ionic-validation-directiv
                 template: htmlTemplates['ionic-validation-directive-template.html'],
                 scope: { errors: '=' },
                 link: function (scope, element, attrs, formCtrl) {
-                    
+
                     //-------------------------------------------------------
                     // Setup
                     //-------------------------------------------------------
@@ -184,27 +207,54 @@ var htmlTemplates = htmlTemplates || {};htmlTemplates['ionic-validation-directiv
 
                     scope.formTouched = false;
                     scope.formSubmitted = false;
+                    scope.formInvalid = false;
                     scope.showErrorIcon = false;
                     scope.showErrorMessage = false;
+
                     scope.ionicStyle = attrs.ionicStyle === "false" ? false : true;
+                    scope.errorColor = attrs.errorColor || "assertive";
+                    scope.errorClass = attrs.errorClass || "default-error-class";
+                    scope.errorIcon = (attrs.errorIcon || "icon ion-alert-circled") + " " + scope.errorColor;
 
-                    // This was used to automatically check for ionic style inputs, but it causes a delay in between
-                    // the time that the page loads and the time that the border around the input loads.
-                    // $timeout(function() {
-                    //     var itemNodes = element.children()[0].querySelectorAll('.item');
-                    //     scope.ionicStyle = itemNodes.length > 0;
-                    // });
-
-
-                    // Only add the animation class the directive has finished loading in the DOM.
+                    // Only add the animation class when the directive has finished loading in the DOM.
                     // This prevents unwanted animations from playing when the directive first loads.
                     $timeout(function () {
                         scope.animate = attrs.animate === "false" ? false : true;
                     });
+                    
                                   
                     //-------------------------------------------------------
                     // Watchers
                     //-------------------------------------------------------
+                    
+                    scope.showError = function() {
+                        return scope.formInvalid && (scope.formTouched || scope.formSubmitted);
+                    }
+                    
+                    // Applies the user-provided error class to the container or input, depending on ionicStyle.
+                    // ngClass would've been used, but there's no way to easily use it on the transcluded inputs (in case of a non-ionic-style input)
+                    // The use of ngAnimate here is necessary as the user's class does not always animate if it is not used.
+                    function toggleErrorStyles() {
+                        // Apply the style to the container if its an ionic input
+                        if (scope.ionicStyle) {
+                            var container = element.children()[0];
+                            if (scope.showError()) {
+                                $animate.addClass(container, scope.errorClass);
+                            } else {
+                                $animate.removeClass(container, scope.errorClass);
+                            }
+                        }
+                        // otherwise, apply it to the input(s)
+                        else {
+                            angular.forEach(element.find('input'), function (value, key) {
+                                //var el = angular.element(value);
+                                if (scope.showError())
+                                    $animate.addClass(value, (scope.errorClass));
+                                else
+                                    $animate.removeClass(value, scope.errorClass);
+                            });
+                        }
+                    }
                     
                     // Look for ngModelControllers (inputs, selects) within the form in order to keep track
                     // of whether they have been touched or not. Doing this allows showing the error message
@@ -215,6 +265,7 @@ var htmlTemplates = htmlTemplates || {};htmlTemplates['ionic-validation-directiv
                             scope.$watch(function () { return value.$touched; }, function (newVal, oldVal) {
                                 if (newVal) {
                                     scope.formTouched = true;
+                                    toggleErrorStyles();
                                 }
                             });
                         }
@@ -222,31 +273,37 @@ var htmlTemplates = htmlTemplates || {};htmlTemplates['ionic-validation-directiv
 
                     // When the message is shown or hidden, set the max height of the error-message-container so the transition starts
                     scope.$watch('showErrorMessage', function (newVal) {
-                        var messageContainer = element.children()[0].querySelector('.error-message');
-                        if (newVal) {
-                            var errorMessageNode = element.children()[0].querySelector('.error-text');
-                            // There will not be an error message node if the user didn't supply an object of errors
-                            if (errorMessageNode) {
+                        // There will not be an error message node if the user didn't supply an object of errors
+                        var errorMessageNode = element.children()[0].querySelector('.error-text');
+                        if (errorMessageNode) {
+                            var messageContainer = element.children()[0].querySelector('.error-message');
+                            if (newVal) {
                                 var errorMessageHeight = element.children()[0].querySelector('.error-text').clientHeight;
                                 messageContainer.style.maxHeight = (errorMessageHeight + 4).toString() + 'px';
+                            } else {
+                                messageContainer.style.maxHeight = '0';
                             }
                         } else {
-                            messageContainer.style.maxHeight = '0';
+                            scope.showErrorMessage = false;
                         }
                     });
-
+                    
                     // When the form's validity changes, refresh the scope and close the message container if it is valid
                     scope.$watch('formCtrl.$invalid', function (newVal, oldVal) {
+                        if (newVal === oldVal)
+                            return;
 
-                        // It is important that an $apply happens for formInvalid
-                        scope.$applyAsync(function (scope) {
-                            scope.formInvalid = newVal;
-                        });
-                        
                         // Hide the error message area when the errors are fixed
                         if (newVal === false) {
                             scope.showErrorMessage = false;
                         }
+                        
+                        // It is important that an $apply happens for formInvalid
+                        scope.$applyAsync(function (scope) {
+                            scope.formInvalid = newVal;
+                            toggleErrorStyles();
+                        });
+
                     });
                     
                     
@@ -258,15 +315,15 @@ var htmlTemplates = htmlTemplates || {};htmlTemplates['ionic-validation-directiv
                     scope.$on('formSubmitted', function (e, submitted) {
                         if (!submitted) submitted = true;
                         scope.formSubmitted = submitted;
+                        toggleErrorStyles();
                     });
                 
                     // This watch is used to catch $emit('formTouched') events from child directives
                     scope.$on('formTouched', function (e, touched) {
                         if (!touched) touched = true;
                         scope.formTouched = touched;
+                        toggleErrorStyles();
                     });
-
-
 
                 }
             };
