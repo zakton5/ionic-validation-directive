@@ -26,7 +26,7 @@ angular.module('starter', ['ionic', 'ngMessages', 'ionic-validation-directive'])
 
 You can override some of the default settings for the directive by placing attributes on the directive. See below for usage examples.
 
-** Note: You will need to use the !important tag on any CSS properties inside custom classes that you pass to the directive. **
+**Note: You will need to use the !important tag on any CSS properties inside custom classes that you pass to the directive.**
 
 | Option      | Default | Description |
 |-------------|-----|-----|
