@@ -1,9 +1,8 @@
 # ionic-validation-directive
-A directive for ionic that wraps form inputs and displays their errors.
+A directive for ionic that wraps form inputs and cleanly displays errors.
 
 ###### Dependencies
-Please make sure you have the following installed already
-- ngMessages   [Installation Instructions](https://docs.angularjs.org/api/ngMessages)
+- ngMessages
 
 
 ## Installation
@@ -27,10 +26,15 @@ angular.module('starter', ['ionic', 'ngMessages', 'ionic-validation-directive'])
 
 You can override some of the default settings for the directive by placing attributes on the directive. See below for usage examples.
 
+** Note: You will need to use the !important tag on any CSS properties inside custom classes that you pass to the directive. **
+
 | Option      | Default | Description |
 |-------------|-----|-----|
 | ionic-style | true | Determines whether the directive will be styled as an ionic style input or not |
 | animate     | true | Determines whether the error icon and error message will use CSS transitions |
+| error-class | default-error-class | The CSS class that is applied to the input when there is an error. |
+| error-icon  | icon ion-alert-circled | The icon class that is displayed when there is an error |
+| error-color | assertive | The color class of the error icon and error message. **Note: this does not affect error-class in any way. You will need to override error-class if you want the input border/box-shadow to be a different color** |
 
 ## Examples
 
@@ -72,6 +76,25 @@ You will need to provide an object that contains key, value pairs of the errors 
   <input type="text" name="username" ng-model="formInfo.username" required>
 </validation-item>
 ```
+
+###### Overriding styles
+```html
+<validation-item errors="{ required: 'This field is required' }" error-class="my-error-class" error-icon="icon ion-android-alert" error-color="positive">
+  <label class="item item-input">
+    <input type="text" name="username" ng-model="formInfo.username" placeholder="Username" min-length="6" required>
+  </label>
+</validation-item>
+```
+```css
+.my-error-class {
+    /* Only box-shadow or border support animations */
+    border: 1px solid red;
+    /* or */
+    box-shadow: box-shadow: inset 0 0 0 2px $positive;
+}
+```
+
+
 
 ## Events
 The ionic-validation-directive responds to the following events
@@ -116,7 +139,7 @@ The above code would used when **my-directive** has finished making a change to 
 5. Submit a pull request
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://raw.githubusercontent.com/RemnantArcher/ionic-validation-directive/master/LICENSE) file for details
 
 
 
