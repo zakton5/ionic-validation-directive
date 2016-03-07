@@ -68,6 +68,14 @@
 "  margin-bottom: 5px;\n" +
 "  margin-left: 16px; }\n" +
 "\n" +
+".validation-item-container .item.item-input-inset {\n" +
+"  border: 0;\n" +
+"  padding: 0;\n" +
+"  margin: 10.6667px; }\n" +
+"\n" +
+".validation-item-container.has-error .item.item-input-inset {\n" +
+"  margin-right: 0; }\n" +
+"\n" +
 ".validation-item-container.animate:not(.ionic-style) input {\n" +
 "  -webkit-transition: box-shadow 0.2s linear, border 0.2s linear;\n" +
 "  -moz-transition: box-shadow 0.2s linear, border 0.2s linear;\n" +
@@ -83,30 +91,26 @@
 ".validation-item-container .icon-container {\n" +
 "  -webkit-flex: 0 0 auto;\n" +
 "  flex: 0 0 auto;\n" +
-"  font-size: 16px;\n" +
-"  max-width: 0;\n" +
-"  opacity: 0; }\n" +
-"\n" +
-".validation-item-container.animate .icon-container {\n" +
-"  -webkit-transition: opacity 0.2s ease-in-out, max-width 0.2s ease-in-out;\n" +
-"  -moz-transition: opacity 0.2s ease-in-out, max-width 0.2s ease-in-out;\n" +
-"  -o-transition: opacity 0.2s ease-in-out, max-width 0.2s ease-in-out;\n" +
-"  transition: opacity 0.2s ease-in-out, max-width 0.2s ease-in-out; }\n" +
-"\n" +
-".validation-item-container.has-error .icon-container {\n" +
-"  opacity: 1; }\n" +
+"  font-size: 16px; }\n" +
 "\n" +
 ".validation-item-container .error-icon {\n" +
 "  -webkit-align-self: center;\n" +
 "  align-self: center;\n" +
 "  padding-left: 7px;\n" +
-"  z-index: 100; }\n" +
+"  margin-right: -25px;\n" +
+"  opacity: 0; }\n" +
+"\n" +
+".validation-item-container.animate .error-icon {\n" +
+"  -webkit-transition: opacity 0.2s ease-in-out, margin 0.2s ease-in-out;\n" +
+"  -moz-transition: opacity 0.2s ease-in-out, margin 0.2s ease-in-out;\n" +
+"  -o-transition: opacity 0.2s ease-in-out, margin 0.2s ease-in-out;\n" +
+"  transition: opacity 0.2s ease-in-out, margin 0.2s ease-in-out; }\n" +
 "\n" +
 ".validation-item-container .error-icon.assertive {\n" +
 "  color: #ef473a; }\n" +
 "\n" +
-".validation-item-container.ionic-style .error-icon {\n" +
-"  padding-right: 16px; }\n" +
+".validation-item-container.has-error .error-icon {\n" +
+"  opacity: 1; }\n" +
 "\n" +
 ".validation-item-container .error-message {\n" +
 "  font-size: 14px;\n" +
@@ -220,8 +224,12 @@ var htmlTemplates = htmlTemplates || {};htmlTemplates['ionic-validation-directiv
                     $timeout(function () {
                         scope.animate = attrs.animate === "false" ? false : true;
                     });
-                            
-                            
+                    
+                    // The ready variable prevents any calculations from happening before the DOM has completely loaded.
+                    var ready = false;      
+                    angular.element(document).ready(function () {
+                        ready = true;
+                    });
                              
                     //-------------------------------------------------------
                     // Functions
@@ -239,12 +247,12 @@ var htmlTemplates = htmlTemplates || {};htmlTemplates['ionic-validation-directiv
                         // There will not be an error message node if the user didn't supply an object of errors
                         var errorIcon = element.children()[0].querySelector('.error-icon');
                         if (errorIcon) {
-                            var iconContainer = element.children()[0].querySelector('.icon-container');
                             if (show) {
-                                var containerWidth = errorIcon.clientWidth;
-                                iconContainer.style.maxWidth = containerWidth.toString() + 'px';
+                                var marginOffset = (scope.ionicStyle) ? "16px" : "0";
+                                errorIcon.style.marginRight = marginOffset;
                             } else {
-                                iconContainer.style.maxWidth = '0';
+                                var iconWidth = errorIcon.clientWidth;
+                                errorIcon.style.marginRight = "-" + iconWidth.toString() + "px";
                             }
                         }
                     }
@@ -269,6 +277,9 @@ var htmlTemplates = htmlTemplates || {};htmlTemplates['ionic-validation-directiv
                     // ngClass would've been used, but there's no way to easily use it on the transcluded inputs (in case of a non-ionic-style input)
                     // The use of ngAnimate here is necessary as the user's class does not always animate if it is not used.
                     function toggleErrorStyles() {
+                        if (!ready)
+                            return;
+                        
                         // Apply the style to the container if its an ionic input
                         if (scope.ionicStyle) {
                             var container = element.children()[0];
@@ -313,7 +324,7 @@ var htmlTemplates = htmlTemplates || {};htmlTemplates['ionic-validation-directiv
                             });
                         }
                     });
-
+                    
                     // When the message is shown or hidden, set the max height of the error-message-container so the transition starts
                     scope.$watch('showErrorMessage', function (newVal) {
                         calcMessageHeight(newVal);
@@ -334,7 +345,6 @@ var htmlTemplates = htmlTemplates || {};htmlTemplates['ionic-validation-directiv
                             scope.formInvalid = newVal;
                             toggleErrorStyles();
                         });
-
                     });
                     
                     

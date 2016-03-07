@@ -37,8 +37,12 @@
                     $timeout(function () {
                         scope.animate = attrs.animate === "false" ? false : true;
                     });
-                            
-                            
+                    
+                    // The ready variable prevents any calculations from happening before the DOM has completely loaded.
+                    var ready = false;      
+                    angular.element(document).ready(function () {
+                        ready = true;
+                    });
                              
                     //-------------------------------------------------------
                     // Functions
@@ -56,12 +60,12 @@
                         // There will not be an error message node if the user didn't supply an object of errors
                         var errorIcon = element.children()[0].querySelector('.error-icon');
                         if (errorIcon) {
-                            var iconContainer = element.children()[0].querySelector('.icon-container');
                             if (show) {
-                                var containerWidth = errorIcon.clientWidth;
-                                iconContainer.style.maxWidth = containerWidth.toString() + 'px';
+                                var marginOffset = (scope.ionicStyle) ? "16px" : "0";
+                                errorIcon.style.marginRight = marginOffset;
                             } else {
-                                iconContainer.style.maxWidth = '0';
+                                var iconWidth = errorIcon.clientWidth;
+                                errorIcon.style.marginRight = "-" + iconWidth.toString() + "px";
                             }
                         }
                     }
@@ -86,6 +90,9 @@
                     // ngClass would've been used, but there's no way to easily use it on the transcluded inputs (in case of a non-ionic-style input)
                     // The use of ngAnimate here is necessary as the user's class does not always animate if it is not used.
                     function toggleErrorStyles() {
+                        if (!ready)
+                            return;
+                        
                         // Apply the style to the container if its an ionic input
                         if (scope.ionicStyle) {
                             var container = element.children()[0];
@@ -130,7 +137,7 @@
                             });
                         }
                     });
-
+                    
                     // When the message is shown or hidden, set the max height of the error-message-container so the transition starts
                     scope.$watch('showErrorMessage', function (newVal) {
                         calcMessageHeight(newVal);
@@ -151,7 +158,6 @@
                             scope.formInvalid = newVal;
                             toggleErrorStyles();
                         });
-
                     });
                     
                     

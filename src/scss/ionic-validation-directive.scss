@@ -28,7 +28,7 @@ $error-color: #ef473a;
     transition: $transition;
 }
 
-$error-icon-container-transition: opacity 0.2s ease-in-out, max-width 0.2s ease-in-out;
+$error-icon-transition: opacity 0.2s ease-in-out, margin 0.2s ease-in-out;
 $error-style-transition: box-shadow 0.2s linear, border 0.2s linear;
 $error-message-transition: opacity 0.2s ease-in-out, max-height 0.2s ease-in-out, padding-bottom 0.2s ease-in-out;
 
@@ -103,6 +103,15 @@ $error-message-transition: opacity 0.2s ease-in-out, max-height 0.2s ease-in-out
     margin-left: 16px;
 }
 
+.validation-item-container .item.item-input-inset {
+    border: 0;
+    padding: 0;
+    margin: 10.6667px;
+}
+.validation-item-container.has-error .item.item-input-inset {
+    margin-right: 0;
+}
+
 // Enables animations
 .validation-item-container.animate:not(.ionic-style) input {
     @include transition($error-style-transition);
@@ -131,19 +140,6 @@ $error-message-transition: opacity 0.2s ease-in-out, max-height 0.2s ease-in-out
     flex: 0 0 auto; 
     
     font-size: 16px;
-    
-    // Transition stuff
-    max-width: 0;
-    opacity: 0;
-}
-
-.validation-item-container.animate .icon-container {
-    @include transition($error-icon-container-transition);
-}
-
-.validation-item-container.has-error .icon-container {
-    // max-width is set in the code
-    opacity: 1;
 }
 
 .validation-item-container .error-icon {
@@ -151,15 +147,20 @@ $error-message-transition: opacity 0.2s ease-in-out, max-height 0.2s ease-in-out
     align-self: center;
     
     padding-left: 7px;
-    z-index: 100;
+    margin-right: -25px;
+    opacity: 0;    
+}
+
+.validation-item-container.animate .error-icon {
+    @include transition($error-icon-transition);
 }
 
 .validation-item-container .error-icon.assertive {
     color: $error-color;
 }
 
-.validation-item-container.ionic-style .error-icon {
-    padding-right:16px;
+.validation-item-container.has-error .error-icon {
+    opacity: 1;
 }
 
 
