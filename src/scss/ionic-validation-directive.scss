@@ -28,7 +28,7 @@ $error-color: #ef473a;
     transition: $transition;
 }
 
-$error-icon-container-transition: opacity 0.2s ease-out, max-width 0.2s ease-out;
+$error-icon-container-transition: opacity 0.2s ease-in-out, max-width 0.2s ease-in-out;
 $error-style-transition: box-shadow 0.2s linear, border 0.2s linear;
 $error-message-transition: opacity 0.2s ease-in-out, max-height 0.2s ease-in-out, padding-bottom 0.2s ease-in-out;
 
@@ -68,7 +68,6 @@ $error-message-transition: opacity 0.2s ease-in-out, max-height 0.2s ease-in-out
     border-bottom-left-radius: 2px;
 }
 
-// TODO: test this
 // Raises inputs with errors so that borders will appear completely on top of other items without errors
 .validation-item-container.ionic-style.has-error {
     z-index: 10;
@@ -104,14 +103,17 @@ $error-message-transition: opacity 0.2s ease-in-out, max-height 0.2s ease-in-out
     margin-left: 16px;
 }
 
+// Enables animations
 .validation-item-container.animate:not(.ionic-style) input {
     @include transition($error-style-transition);
 }
 
+// This is required for use of box-shadows on iOS
 .validation-item-container:not(.ionic-style) input {
      -webkit-appearance: none;
 }
 
+// The default error class for regular inputs
 .validation-item-container.has-error:not(.ionic-style) input.default-error-class {
      box-shadow: inset 13px 0 0 -10px $error-color;
 }
@@ -140,7 +142,7 @@ $error-message-transition: opacity 0.2s ease-in-out, max-height 0.2s ease-in-out
 }
 
 .validation-item-container.has-error .icon-container {
-    max-width: 40px;
+    // max-width is set in the code
     opacity: 1;
 }
 
@@ -148,7 +150,7 @@ $error-message-transition: opacity 0.2s ease-in-out, max-height 0.2s ease-in-out
     -webkit-align-self: center;
     align-self: center;
     
-    margin-left: 7px;
+    padding-left: 7px;
     z-index: 100;
 }
 
@@ -157,7 +159,7 @@ $error-message-transition: opacity 0.2s ease-in-out, max-height 0.2s ease-in-out
 }
 
 .validation-item-container.ionic-style .error-icon {
-    margin-right:16px;
+    padding-right:16px;
 }
 
 

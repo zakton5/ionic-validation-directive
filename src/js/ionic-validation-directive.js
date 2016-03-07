@@ -37,14 +37,49 @@
                     $timeout(function () {
                         scope.animate = attrs.animate === "false" ? false : true;
                     });
-                    
-                                  
+                            
+                            
+                             
                     //-------------------------------------------------------
-                    // Watchers
+                    // Functions
                     //-------------------------------------------------------
                     
-                    scope.showError = function() {
+                    // This determines if error styles should be visible on the input
+                    scope.showError = function () {
                         return scope.formInvalid && (scope.formTouched || scope.formSubmitted);
+                    }
+                    
+                    // The reason for these calculation functions is so the transitions will look as smooth as possible. For example,
+                    // setting a higher max width than what the element actually is will cause the transition to finish too quickly.
+                    // Sets the max width of the error icon container so that the transition plays correctly.
+                    function calcIconWidth(show) {
+                        // There will not be an error message node if the user didn't supply an object of errors
+                        var errorIcon = element.children()[0].querySelector('.error-icon');
+                        if (errorIcon) {
+                            var iconContainer = element.children()[0].querySelector('.icon-container');
+                            if (show) {
+                                var containerWidth = errorIcon.clientWidth;
+                                iconContainer.style.maxWidth = containerWidth.toString() + 'px';
+                            } else {
+                                iconContainer.style.maxWidth = '0';
+                            }
+                        }
+                    }
+
+                    function calcMessageHeight(show) {
+                        // There will not be an error message node if the user didn't supply an object of errors
+                        var errorMessageNode = element.children()[0].querySelector('.error-text');
+                        if (errorMessageNode && scope.showError()) {
+                            var messageContainer = element.children()[0].querySelector('.error-message');
+                            if (show) {
+                                var errorMessageHeight = errorMessageNode.clientHeight;
+                                messageContainer.style.maxHeight = (errorMessageHeight + 4).toString() + 'px';
+                            } else {
+                                messageContainer.style.maxHeight = '0';
+                            }
+                        } else {
+                            scope.showErrorMessage = false;
+                        }
                     }
                     
                     // Applies the user-provided error class to the container or input, depending on ionicStyle.
@@ -55,6 +90,7 @@
                         if (scope.ionicStyle) {
                             var container = element.children()[0];
                             if (scope.showError()) {
+
                                 $animate.addClass(container, scope.errorClass);
                             } else {
                                 $animate.removeClass(container, scope.errorClass);
@@ -70,7 +106,15 @@
                                     $animate.removeClass(value, scope.errorClass);
                             });
                         }
+
+                        calcIconWidth(scope.showError());
                     }
+                    
+                    
+                    
+                    //-------------------------------------------------------
+                    // Watchers
+                    //-------------------------------------------------------
                     
                     // Look for ngModelControllers (inputs, selects) within the form in order to keep track
                     // of whether they have been touched or not. Doing this allows showing the error message
@@ -89,19 +133,7 @@
 
                     // When the message is shown or hidden, set the max height of the error-message-container so the transition starts
                     scope.$watch('showErrorMessage', function (newVal) {
-                        // There will not be an error message node if the user didn't supply an object of errors
-                        var errorMessageNode = element.children()[0].querySelector('.error-text');
-                        if (errorMessageNode) {
-                            var messageContainer = element.children()[0].querySelector('.error-message');
-                            if (newVal) {
-                                var errorMessageHeight = element.children()[0].querySelector('.error-text').clientHeight;
-                                messageContainer.style.maxHeight = (errorMessageHeight + 4).toString() + 'px';
-                            } else {
-                                messageContainer.style.maxHeight = '0';
-                            }
-                        } else {
-                            scope.showErrorMessage = false;
-                        }
+                        calcMessageHeight(newVal);
                     });
                     
                     // When the form's validity changes, refresh the scope and close the message container if it is valid
@@ -109,12 +141,12 @@
                         if (newVal === oldVal)
                             return;
 
-                        // Hide the error message area when the errors are fixed
+                        // Hide the error message area if there are no errors
                         if (newVal === false) {
                             scope.showErrorMessage = false;
                         }
                         
-                        // It is important that an $apply happens for formInvalid
+                        // It is important that an $apply happens for formInvalid.
                         scope.$applyAsync(function (scope) {
                             scope.formInvalid = newVal;
                             toggleErrorStyles();
