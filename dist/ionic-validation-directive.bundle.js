@@ -24,15 +24,21 @@
 "  box-sizing: border-box; }\n" +
 "\n" +
 ".validation-item-container input, .validation-item-container select {\n" +
-"  width: 100%; }\n" +
+"  width: 99%; }\n" +
 "\n" +
 ".validation-item-container.ionic-style {\n" +
 "  margin: -1px;\n" +
-"  border: 1px solid #ddd; }\n" +
+"  border: 1px solid #ddd;\n" +
+"  position: relative;\n" +
+"  z-index: 0; }\n" +
 "\n" +
 ".list-inset .validation-item-container.ionic-style {\n" +
 "  margin-left: 0;\n" +
 "  margin-right: 0; }\n" +
+"\n" +
+".card .validation-item-container.ionic-style {\n" +
+"  border-left: 0;\n" +
+"  border-right: 0; }\n" +
 "\n" +
 ".list-inset ng-form:first-child .validation-item-container.ionic-style {\n" +
 "  border-top-left-radius: 2px;\n" +
@@ -42,19 +48,25 @@
 "  border-bottom-right-radius: 2px;\n" +
 "  border-bottom-left-radius: 2px; }\n" +
 "\n" +
+".validation-item-container.ionic-style.animate.has-error {\n" +
+"  -webkit-transition: box-shadow 0.2s linear, border 0.2s linear, padding 0.2s linear, z-index 0.2s step-start;\n" +
+"  -moz-transition: box-shadow 0.2s linear, border 0.2s linear, padding 0.2s linear, z-index 0.2s step-start;\n" +
+"  -o-transition: box-shadow 0.2s linear, border 0.2s linear, padding 0.2s linear, z-index 0.2s step-start;\n" +
+"  transition: box-shadow 0.2s linear, border 0.2s linear, padding 0.2s linear, z-index 0.2s step-start; }\n" +
+"\n" +
 ".validation-item-container.ionic-style.has-error {\n" +
-"  z-index: 10;\n" +
-"  position: relative;\n" +
-"  -webkit-appearance: none; }\n" +
+"  -webkit-appearance: none;\n" +
+"  z-index: 10; }\n" +
 "\n" +
 ".validation-item-container.animate {\n" +
-"  -webkit-transition: box-shadow 0.2s linear, border 0.2s linear;\n" +
-"  -moz-transition: box-shadow 0.2s linear, border 0.2s linear;\n" +
-"  -o-transition: box-shadow 0.2s linear, border 0.2s linear;\n" +
-"  transition: box-shadow 0.2s linear, border 0.2s linear; }\n" +
+"  -webkit-transition: box-shadow 0.2s linear, border 0.2s linear, padding 0.2s linear, z-index 0.2s step-end;\n" +
+"  -moz-transition: box-shadow 0.2s linear, border 0.2s linear, padding 0.2s linear, z-index 0.2s step-end;\n" +
+"  -o-transition: box-shadow 0.2s linear, border 0.2s linear, padding 0.2s linear, z-index 0.2s step-end;\n" +
+"  transition: box-shadow 0.2s linear, border 0.2s linear, padding 0.2s linear, z-index 0.2s step-end; }\n" +
 "\n" +
 ".validation-item-container.ionic-style.has-error.default-error-class {\n" +
-"  box-shadow: inset 13px 0 0 -10px #ef473a; }\n" +
+"  box-shadow: inset 13px 0 0 -10px #ef473a;\n" +
+"  padding-left: 3px; }\n" +
 "\n" +
 ".validation-item-container .item-container {\n" +
 "  -webkit-flex: 1 1 auto;\n" +
@@ -63,10 +75,7 @@
 ".validation-item-container .item.item-input {\n" +
 "  border: 0;\n" +
 "  border-radius: 0;\n" +
-"  padding: 0;\n" +
-"  margin-top: 6px;\n" +
-"  margin-bottom: 5px;\n" +
-"  margin-left: 16px; }\n" +
+"  margin: 0; }\n" +
 "\n" +
 ".validation-item-container .item.item-input-inset {\n" +
 "  border: 0;\n" +
@@ -77,10 +86,10 @@
 "  margin-right: 0; }\n" +
 "\n" +
 ".validation-item-container.animate:not(.ionic-style) input {\n" +
-"  -webkit-transition: box-shadow 0.2s linear, border 0.2s linear;\n" +
-"  -moz-transition: box-shadow 0.2s linear, border 0.2s linear;\n" +
-"  -o-transition: box-shadow 0.2s linear, border 0.2s linear;\n" +
-"  transition: box-shadow 0.2s linear, border 0.2s linear; }\n" +
+"  -webkit-transition: box-shadow 0.2s linear, border 0.2s linear, padding 0.2s linear, z-index 0.2s step-end;\n" +
+"  -moz-transition: box-shadow 0.2s linear, border 0.2s linear, padding 0.2s linear, z-index 0.2s step-end;\n" +
+"  -o-transition: box-shadow 0.2s linear, border 0.2s linear, padding 0.2s linear, z-index 0.2s step-end;\n" +
+"  transition: box-shadow 0.2s linear, border 0.2s linear, padding 0.2s linear, z-index 0.2s step-end; }\n" +
 "\n" +
 ".validation-item-container:not(.ionic-style) input {\n" +
 "  -webkit-appearance: none; }\n" +
@@ -284,7 +293,6 @@ var htmlTemplates = htmlTemplates || {};htmlTemplates['ionic-validation-directiv
                         if (scope.ionicStyle) {
                             var container = element.children()[0];
                             if (scope.showError()) {
-
                                 $animate.addClass(container, scope.errorClass);
                             } else {
                                 $animate.removeClass(container, scope.errorClass);

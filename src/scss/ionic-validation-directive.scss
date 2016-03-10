@@ -29,9 +29,9 @@ $error-color: #ef473a;
 }
 
 $error-icon-transition: opacity 0.2s ease-in-out, margin 0.2s ease-in-out;
-$error-style-transition: box-shadow 0.2s linear, border 0.2s linear;
+$error-style-on-transition: box-shadow 0.2s linear, border 0.2s linear, padding 0.2s linear, z-index 0.2s step-end;
+$error-style-off-transition: box-shadow 0.2s linear, border 0.2s linear, padding 0.2s linear, z-index 0.2s step-start;
 $error-message-transition: opacity 0.2s ease-in-out, max-height 0.2s ease-in-out, padding-bottom 0.2s ease-in-out;
-
 
 
 //-------------------------------------------------------
@@ -39,22 +39,30 @@ $error-message-transition: opacity 0.2s ease-in-out, max-height 0.2s ease-in-out
 //-------------------------------------------------------
 
 .validation-item-container {
-    @extend .border-box-style; 
+    @extend .border-box-style;
 }
 
 // Makes sure that all inputs fill the width of the container
 .validation-item-container input, .validation-item-container select {
-    width: 100%;
+    width: 99%;
 }
 
 // Mimics style of ionic inputs
 .validation-item-container.ionic-style {
     margin: -1px;
     border: 1px solid #ddd;
+    
+    // Transition stuff
+    position: relative;
+    z-index: 0;
 }
 .list-inset .validation-item-container.ionic-style {
     margin-left: 0;
     margin-right: 0;
+}
+.card .validation-item-container.ionic-style {
+    border-left: 0;
+    border-right: 0;    
 }
 
 // Round top border corners in first list item
@@ -69,19 +77,24 @@ $error-message-transition: opacity 0.2s ease-in-out, max-height 0.2s ease-in-out
 }
 
 // Raises inputs with errors so that borders will appear completely on top of other items without errors
+.validation-item-container.ionic-style.animate.has-error {
+    @include transition($error-style-off-transition);
+}
+
 .validation-item-container.ionic-style.has-error {
-    z-index: 10;
-    position: relative;
     -webkit-appearance: none;
+    z-index: 10;
 }
 
 .validation-item-container.animate {
-    @include transition($error-style-transition);
+    @include transition($error-style-on-transition);
 }
     
 // Bar styled error
 .validation-item-container.ionic-style.has-error.default-error-class {
+    //border-left: 4px solid red;
     box-shadow: inset 13px 0 0 -10px $error-color;
+    padding-left: 3px;
 }
 
 //-------------------------------------------------------
@@ -97,10 +110,7 @@ $error-message-transition: opacity 0.2s ease-in-out, max-height 0.2s ease-in-out
 .validation-item-container .item.item-input {
     border: 0;
     border-radius: 0;
-    padding: 0;
-    margin-top: 6px;
-    margin-bottom: 5px;
-    margin-left: 16px;
+    margin:0;
 }
 
 .validation-item-container .item.item-input-inset {
@@ -114,7 +124,7 @@ $error-message-transition: opacity 0.2s ease-in-out, max-height 0.2s ease-in-out
 
 // Enables animations
 .validation-item-container.animate:not(.ionic-style) input {
-    @include transition($error-style-transition);
+    @include transition($error-style-on-transition);
 }
 
 // This is required for use of box-shadows on iOS

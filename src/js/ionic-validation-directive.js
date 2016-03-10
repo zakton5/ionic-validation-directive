@@ -97,7 +97,6 @@
                         if (scope.ionicStyle) {
                             var container = element.children()[0];
                             if (scope.showError()) {
-
                                 $animate.addClass(container, scope.errorClass);
                             } else {
                                 $animate.removeClass(container, scope.errorClass);
