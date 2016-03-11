@@ -92,7 +92,6 @@ $error-message-transition: opacity 0.2s ease-in-out, max-height 0.2s ease-in-out
     
 // Bar styled error
 .validation-item-container.ionic-style.has-error.default-error-class {
-    //border-left: 4px solid red;
     box-shadow: inset 13px 0 0 -10px $error-color;
     padding-left: 3px;
 }
