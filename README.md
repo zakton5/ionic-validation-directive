@@ -90,7 +90,8 @@ You will need to provide an object that contains key, value pairs of the errors 
     /* Only box-shadow or border support animations */
     border: 1px solid red;
     /* or */
-    box-shadow: box-shadow: inset 0 0 0 2px $positive;
+    box-shadow: 0 0 0 2px $positive inset;
+    padding: 2px; /* Padding is necessary to see the box-shadow */
 }
 ```
 
