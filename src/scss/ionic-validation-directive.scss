@@ -43,8 +43,8 @@ $error-message-transition: opacity 0.2s ease-in-out, max-height 0.2s ease-in-out
 }
 
 // Makes sure that all inputs fill the width of the container
-.validation-item-container input, .validation-item-container select {
-    width: 99%;
+.validation-item-container:not(.ionic-style) input {
+    width: 100%;
 }
 
 // Mimics style of ionic inputs

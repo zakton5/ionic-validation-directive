@@ -23,8 +23,8 @@
 "  -webkit-box-sizing: border-box;\n" +
 "  box-sizing: border-box; }\n" +
 "\n" +
-".validation-item-container input, .validation-item-container select {\n" +
-"  width: 99%; }\n" +
+".validation-item-container:not(.ionic-style) input {\n" +
+"  width: 100%; }\n" +
 "\n" +
 ".validation-item-container.ionic-style {\n" +
 "  margin: -1px;\n" +
@@ -354,7 +354,6 @@ var htmlTemplates = htmlTemplates || {};htmlTemplates['ionic-validation-directiv
                             toggleErrorStyles();
                         });
                     });
-                    
                     
                     //-------------------------------------------------------
                     // Event handlers
