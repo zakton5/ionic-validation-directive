@@ -9,8 +9,8 @@
             </div>
         </div>
         <div class="error-message" ng-class="::errorColor" ng-messages="formCtrl.$error" role="alert">
-            <div class="error-text" ng-message-exp="key" ng-repeat="(key, value) in ::errors">
-                {{ ::value }}
+            <div class="error-text" ng-message-exp="key" ng-repeat="(key, value) in errors">
+                {{ value }}
             </div>
         </div>
     </div>
