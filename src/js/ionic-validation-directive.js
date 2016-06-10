@@ -129,8 +129,8 @@
                         // Only watch objects with ng-model
                         if (typeof value === 'object' && value.hasOwnProperty('$modelValue')) {
                             scope.$watch(function () { return value.$touched; }, function (newVal, oldVal) {
-                                if (newVal) {
-                                    scope.formTouched = true;
+                                if (newVal !== oldVal) {
+                                    scope.formTouched = newVal;
                                     toggleErrorStyles();
                                 }
                             });
@@ -164,16 +164,18 @@
                     //-------------------------------------------------------
                 
                     // Catch the $broadcast('formSubmitted') from the page's controller indicating that the parent form has been submitted
-                    scope.$on('formSubmitted', function (e, submitted) {
-                        if (!submitted) submitted = true;
+                    scope.$on('formSubmitted', function (e, submitted) {                       
+                        submitted = submitted !== false;
                         scope.formSubmitted = submitted;
                         toggleErrorStyles();
                     });
                 
                     // This watch is used to catch $emit('formTouched') events from child directives
                     scope.$on('formTouched', function (e, touched) {
-                        if (!touched) touched = true;
+                        touched = touched !== false;
                         scope.formTouched = touched;
+                        if (!touched)
+                            scope.formCtrl.$setUntouched();
                         toggleErrorStyles();
                     });
 
