@@ -43,7 +43,7 @@ $error-message-transition: opacity 0.2s ease-in-out, max-height 0.2s ease-in-out
 }
 
 // Makes sure that all inputs fill the width of the container
-.validation-item-container:not(.ionic-style) input {
+.validation-item-container:not(.ionic-style) input, .validation-item-container:not(.ionic-style) textarea {
     width: 100%;
 }
 
@@ -122,17 +122,17 @@ $error-message-transition: opacity 0.2s ease-in-out, max-height 0.2s ease-in-out
 }
 
 // Enables animations
-.validation-item-container.animate:not(.ionic-style) input {
+.validation-item-container.animate:not(.ionic-style) input, .validation-item-container.animate:not(.ionic-style) textarea {
     @include transition($error-style-on-transition);
 }
 
 // This is required for use of box-shadows on iOS
-.validation-item-container:not(.ionic-style) input {
+.validation-item-container:not(.ionic-style) input, .validation-item-container:not(.ionic-style) textarea {
      -webkit-appearance: none;
 }
 
 // The default error class for regular inputs
-.validation-item-container.has-error:not(.ionic-style) input.default-error-class {
+.validation-item-container.has-error:not(.ionic-style) input.default-error-class, .validation-item-container.has-error:not(.ionic-style) textarea.default-error-class {
      box-shadow: inset 13px 0 0 -10px $error-color;
 }
 
