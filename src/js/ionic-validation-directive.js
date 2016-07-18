@@ -111,6 +111,13 @@
                                 else
                                     $animate.removeClass(value, scope.errorClass);
                             });
+                            angular.forEach(element.find('textarea'), function (value, key) {
+                                //var el = angular.element(value);
+                                if (scope.showError())
+                                    $animate.addClass(value, (scope.errorClass));
+                                else
+                                    $animate.removeClass(value, scope.errorClass);
+                            });
                         }
 
                         calcIconWidth(scope.showError());
